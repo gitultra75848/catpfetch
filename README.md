@@ -3,6 +3,8 @@ readme in progress, in summary just a cool(ish) recreation of nekowinston's catp
 note: only works on macs at the moment.
 
 steps: open your terminal app and type in
+``pip install rich`` and ``pip install getpass``
+then
 ``git clone https://github.com/gitultra75848/catpfetch.git``
 then type in
 ``cd catpfetch && python3 catpfetch.py``
