@@ -16,17 +16,34 @@ def get_macos_version():
     """
     return platform.mac_ver()[0]
 
+def get_username():
+    """Gets the current username.
+
+    Returns:
+        A string representing the current username.
+    """
+    import pwd
+
+    return pwd.getpwuid(os.getuid()).pw_name
+
+
+def get_hostname():
+    """Gets the system hostname.
+
+    Returns:
+        A string representing the system hostname.
+    """
+    import socket
+
+    return socket.gethostname()
+
 try:
-  # Use os.uname() for Python 3.3 or above (more portable)
   if hasattr(os, 'uname'):
     version_info = os.uname().release.split('.')
-    # Try to get up to 3 parts (major, minor, patch)
     kernel_version = '.'.join(version_info[:3])
   else:
-    # Fallback to using `uname -r` for older Python versions
     process = subprocess.run(["uname", "-r"], capture_output=True, check=True)
     kernel_version = process.stdout.decode('utf-8').strip()
-    # Split and take the first 3 parts (might not always provide 3)
     kernel_version = '.'.join(kernel_version.split('.')[:3])
 except (AttributeError, subprocess.CalledProcessError):
   kernel_version = "Unable to determine kernel version."
@@ -34,19 +51,16 @@ except (AttributeError, subprocess.CalledProcessError):
 def get_zsh_version():
   """Attempts to get the Zsh version using different methods."""
   try:
-    # Try zsh --version first
     process = subprocess.run(["zsh", "--version"], capture_output=True, check=True)
     zsh_version = process.stdout.decode('utf-8').strip()
-    # Extract version using regular expression (improved)
-    match = re.search(r"zsh ([\d.]+)", zsh_version)  # Capture version with any separator
+    match = re.search(r"zsh ([\d.]+)", zsh_version)
     if match:
       return match.group(1)
     else:
-      # Fallback if --version doesn'  t provide full info
       process = subprocess.run(["ps", "-p", '$PPID', '-o', 'version='], 
                                 stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
       output, _ = process.communicate()
-      return output.decode('utf-8').strip()  # Might include "unknown"
+      return output.decode('utf-8').strip()
   except subprocess.CalledProcessError:
     return "Zsh not found or inaccessible."
 
@@ -85,6 +99,8 @@ def get_memory_usage():
 
 
 if __name__ == "__main__":
+    username = get_username()
+    hostname = get_hostname()
     version = get_macos_version()
     uptime = get_uptime()
     total_memory_gb, used_memory_gb = get_memory_usage()
@@ -103,4 +119,5 @@ if __name__ == "__main__":
                
     print("   ")
     print(" [white]0   [red]1   [green]2   [magenta]3   [yellow]4   [blue]5   [purple]6   [cyan]7   [black]8")
+
 
