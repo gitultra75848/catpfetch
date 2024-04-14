@@ -91,7 +91,7 @@ if __name__ == "__main__":
 
     print("   ")
     print(f"""
-               [yellow]dusten@napkin
+               [yellow]{username}@{hostname}
 [medium_purple1]　/l 、        [green]os       [white]macOS {version}
 [medium_purple1]（ﾟ､ ｡ ７      [green]kernel   [white]{kernel_version}
 [medium_purple1]  l、~ ヽ      [green]uptime   [white]{uptime}
