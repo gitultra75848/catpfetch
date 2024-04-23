@@ -9,30 +9,15 @@ import socket
 import time
 
 def get_macos_version():
-    """Gets the macOS version as a string.
-
-    Returns:
-        A string representing the macOS version.
-    """
     return platform.mac_ver()[0]
 
 def get_username():
-    """Gets the current username.
-
-    Returns:
-        A string representing the current username.
-    """
     import pwd
 
     return pwd.getpwuid(os.getuid()).pw_name
 
 
 def get_hostname():
-    """Gets the system hostname.
-
-    Returns:
-        A string representing the system hostname.
-    """
     import socket
 
     return socket.gethostname()
@@ -49,7 +34,6 @@ except (AttributeError, subprocess.CalledProcessError):
   kernel_version = "Unable to determine kernel version."
 
 def get_zsh_version():
-  """Attempts to get the Zsh version using different methods."""
   try:
     process = subprocess.run(["zsh", "--version"], capture_output=True, check=True)
     zsh_version = process.stdout.decode('utf-8').strip()
@@ -67,11 +51,6 @@ def get_zsh_version():
 zsh_version = get_zsh_version()
 
 def get_uptime():
-    """Gets the system uptime in a human-readable format (e.g., days, hours, minutes).
-
-    Returns:
-        A string representing the system uptime.
-    """
     uptime = psutil.boot_time()
     uptime_seconds = time.time() - uptime
     uptime_days = int(uptime_seconds / (24 * 60 * 60))
