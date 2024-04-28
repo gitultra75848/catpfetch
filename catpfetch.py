@@ -66,11 +66,6 @@ def get_uptime():
 
 
 def get_memory_usage():
-    """Gets the total memory and used memory in GB.
-
-    Returns:
-        A tuple containing the total memory (GB) and used memory (GB).
-    """
     memory = psutil.virtual_memory()
     total_memory_gb = round(memory.total / (1024 * 1024 * 1024), 2)
     used_memory_gb = round(memory.used / (1024 * 1024 * 1024), 2)
