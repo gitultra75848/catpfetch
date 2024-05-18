@@ -1,4 +1,4 @@
-Just a simple recreation of `https://github.com/nekowinston`'s catpfetch script.
+Just a simple recreation of https://github.com/nekowinston 's catpfetch script.
 
 (NOTE: Only works on MacOS w/ zsh or fish currently.)
 
