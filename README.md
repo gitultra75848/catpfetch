@@ -1,15 +1,19 @@
-readme in progress, in summary just a cool(ish) recreation of nekowinston's catpfetch.
+Just a simple recreation of Nekowinston's catpfetch script.
 
-note: only works on macs at the moment.
+(NOTE: Only works on MacOS w/ zsh or fish currently.)
 
-steps: open your terminal app and type in
-``pip3 install rich``
-then
-``git clone https://github.com/gitultra75848/catpfetch.git``
-then type in
-``cd catpfetch && python3 catpfetch.py``
-and it should run, if you want to you can add it to ~/.zshrc by running
-``nano ~/.zshrc``
-then going to the very bottom and typing in
-``python3 /Users/insertyourusername/catpfetch/catpfetch.py``
-that's all for now, will be adding bash and fish shell support later on, might do linux support too.
+--------------------------------------------------
+
+Installation:
+`git clone https://github.com/gitultra75848/catpfetch.git`
+
+--------------------------------------------------
+
+If you want to run it without using `python3 catpfetch.py` you can edit your shell's config file.
+
+Open your ~/.zshrc OR ~/.config/fish/config.fish file in your preferred editor.
+
+Add this line to it:
+`alias catpfetch="python3 ~/catpfetch/catpfetch.py`
+
+Write and quit the editor, restart your shell and you're good to go!
