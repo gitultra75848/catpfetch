@@ -1,6 +1,6 @@
 Just a simple recreation of https://github.com/nekowinston 's catpfetch script.
 
-(NOTE: Only works on MacOS w/ zsh or fish currently.)
+(NOTE: Only works on MacOS w/ fish shell currently.)
 
 --------------------------------------------------
 
@@ -11,7 +11,7 @@ Installation:
 
 If you want to run it without using `python3 catpfetch.py` you can edit your shell's config file.
 
-Open your ~/.zshrc OR ~/.config/fish/config.fish file in your preferred editor.
+Open your ~/.config/fish/config.fish file in your preferred editor.
 
 Add this line to it:
 `alias catpfetch="python3 ~/catpfetch/catpfetch.py`
