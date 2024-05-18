@@ -8,47 +8,39 @@ import getpass
 import socket
 import time
 
+
 def get_macos_version():
     return platform.mac_ver()[0]
 
-def get_username():
-    import pwd
-
-    return pwd.getpwuid(os.getuid()).pw_name
-
-
-def get_hostname():
-    import socket
-
-    return socket.gethostname()
 
 try:
-  if hasattr(os, 'uname'):
-    version_info = os.uname().release.split('.')
-    kernel_version = '.'.join(version_info[:3])
-  else:
-    process = subprocess.run(["uname", "-r"], capture_output=True, check=True)
-    kernel_version = process.stdout.decode('utf-8').strip()
-    kernel_version = '.'.join(kernel_version.split('.')[:3])
-except (AttributeError, subprocess.CalledProcessError):
-  kernel_version = "Unable to determine kernel version."
-
-def get_zsh_version():
-  try:
-    process = subprocess.run(["zsh", "--version"], capture_output=True, check=True)
-    zsh_version = process.stdout.decode('utf-8').strip()
-    match = re.search(r"zsh ([\d.]+)", zsh_version)
-    if match:
-      return match.group(1)
+    if hasattr(os, 'uname'):
+        version_info = os.uname().release.split('.')
+        kernel_version = '.'.join(version_info[:3])
     else:
-      process = subprocess.run(["ps", "-p", '$PPID', '-o', 'version='], 
-                                stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
-      output, _ = process.communicate()
-      return output.decode('utf-8').strip()
-  except subprocess.CalledProcessError:
-    return "Zsh not found or inaccessible."
+        process = subprocess.run(["uname", "-r"], capture_output=True, check=True)
+        kernel_version = process.stdout.decode('utf-8').strip()
+        kernel_version = '.'.join(kernel_version.split('.')[:3])
+except (AttributeError, subprocess.CalledProcessError):
+    kernel_version = "Unable to determine kernel version."
 
-zsh_version = get_zsh_version()
+
+def get_fish_version():
+    try:
+        process = subprocess.run(["fish", "--version"], capture_output=True, check=True)
+        fish_version = process.stdout.decode('utf-8').strip()
+        match = re.search(r"fish, version ([\d.]+)", fish_version)
+        if match:
+            return match.group(1)
+        else:
+            return "Unknown fish version"
+    except subprocess.CalledProcessError:
+        return "Fish not found or inaccessible."
+
+fish_version = get_fish_version()
+
+username = getpass.getuser()
+hostname = socket.gethostname()
 
 def get_uptime():
     uptime = psutil.boot_time()
@@ -73,12 +65,12 @@ def get_memory_usage():
 
 
 if __name__ == "__main__":
-    username = get_username()
-    hostname = get_hostname()
     version = get_macos_version()
     uptime = get_uptime()
     total_memory_gb, used_memory_gb = get_memory_usage()
-
+    username = getpass.getuser()
+    hostname = socket.gethostname()
+    
     print("   ")
     print(f"""
                [yellow]{username}@{hostname}
@@ -86,12 +78,7 @@ if __name__ == "__main__":
 [medium_purple1]（ﾟ､ ｡ ７      [green]kernel   [white]{kernel_version}
 [medium_purple1]  l、~ ヽ      [green]uptime   [white]{uptime}
 [medium_purple1]  ししと ）ノ  [green]memory   [white]{used_memory_gb} GB / {total_memory_gb} GB
-               [green]shell    [white]zsh {zsh_version}""")
-                        
+               [green]shell    [white]fish {fish_version}""")
 
-               
-               
     print("   ")
-    print(" [white]0   [red]1   [green]2   [magenta]3   [yellow]4   [blue]5   [purple]6   [cyan]7   [black]8")
-
-
+    print(" [white]   [red]   [green]   [magenta]   [yellow]   [blue]   [purple]   [cyan]   [black]")
